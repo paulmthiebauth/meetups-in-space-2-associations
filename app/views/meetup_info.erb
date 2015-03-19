@@ -1,0 +1,33 @@
+  <h1><%= info.meetup_name %></h1>
+  <h3><%= info.meetup_location %></h3>
+  <h5><%= info.meetup_description %></h5>
+  <% if signed_up? == false %>
+  <form action="/meetup/<%=params[:id]%>" method="post">
+  <div class="button"><input type="submit" value="Join" color="black" id="id"></div>
+  </form>
+  <% end %>
+
+  <% if signed_up? %>
+  <form action="/leave_group/<%=params[:id]%>" method="post">
+    <div class="button"><input type="submit" value="Leave" color="black" id="id"></div>
+  </form>
+  <br />
+  Member List:<br />
+  <% members.each do |member| %>
+  <%= member.user.username %><br /><br />
+  <img src="<%= member.user.avatar_url %>"><br />
+  <% end %>
+  <br />
+  <form action="/new_comment/<%=params[:id]%>" method="post">
+    <label for="task_name">Title:</label>
+    <div class="button"><input type="text" id="title" name="title"></div><br />
+    <label for="task_name">Comment:</label>
+    <div class="button"><input type="text" id="comment" name="comment" required></div><br />
+    <div class="button"><input type="submit" value="Comment" color="black" id="id"></div>
+  <form>
+    <ol>
+    <% comments.each do |comment| %>
+    <li>Title: <%= comment.title %>&nbsp;Comment: <%= comment.body %></li><br />
+    <% end %>
+  </ol>
+  <% end %>
